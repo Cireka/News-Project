@@ -2,7 +2,7 @@ import { BsSearch } from "react-icons/bs";
 
 const Navbar = () => {
   return (
-    <nav className="mt-[40px] mx-[auto] max-w-[1400px] flex items-center justify-between">
+    <nav className="mb-[64px] mt-[40px] flex items-center justify-between">
       <div>
         <span className="text-[white]  items-center rounded text-[18px] font-[700] w-[56px] p-[8px] custom-shadow custom-bg">
           News
