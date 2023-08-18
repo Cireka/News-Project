@@ -21,10 +21,5 @@ html {
   font-family: "Playfair Display", serif;
 }
 body {
-  background: linear-gradient(
-    136deg,
-    rgba(253, 253, 253, 0.35) 0%,
-    rgba(253, 253, 253, 0.1) 100%
-  );
-  backdrop-filter: blur(12.5px);
+  background-color: #e9eaea;
 }
