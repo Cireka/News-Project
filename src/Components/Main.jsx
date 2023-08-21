@@ -4,9 +4,13 @@ import useFetch from "../utils/useFetch";
 const Main = () => {
   const newsKey = import.meta.env.VITE_NEWS_KEY;
 
-  // const news = useFetch(
-  //   `https://gnews.io/api/v4/search?q=example&apikey=${newsKey}&lang=en&max=9&page=1`
-  // );
+  const { data, loading } = useFetch(
+    `https://newsdata.io/api/1/news?apikey=${newsKey}&image=1&language=en&full_content=1&size=9`
+  );
+
+  console.log(data);
+
+  // exclude stupid image provider
 
   return (
     <main className="px-[18px] mt-[46px] mb-[86px]">
@@ -14,62 +18,19 @@ const Main = () => {
         Latest News
       </h2>
       <div className="flex flex-wrap w-[100%] gap-[30px] ">
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
-        <NewsBox
-          key={Math.random()}
-          title={"Ukrine Pushing Back"}
-          picture="/src/assets/Rectangle 1.png"
-          author={"BBC"}
-          time={2}
-        />
+        {!loading &&
+          data.results.slice(1).map((data) => {
+            console.log(data);
+            return (
+              <NewsBox
+                key={Math.random()}
+                title={data?.title}
+                picture={data?.image_url}
+                author={data?.source_id}
+                time={data?.pubDate}
+              />
+            );
+          })}
       </div>
     </main>
   );
