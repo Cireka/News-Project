@@ -3,17 +3,18 @@ import moment from "moment/moment";
 
 const Hero = () => {
   const newsKey = import.meta.env.VITE_NEWS_KEY;
+  const backupKey = import.meta.env.VITE_NEWS_KEY_BACKUP;
   const { data } = useFetch(
-    `https://newsdata.io/api/1/news?apikey=${newsKey}&image=1&language=en&full_content=1&size=10&excludedomain=phys.org,https://whatnowatlanta.com`
+    `https://newsdata.io/api/1/news?apikey=${backupKey}&image=1&language=en&full_content=1&size=1&domain=timeslive,GOODTO,THEHILL,coincu`
   );
-  // Phys.org
+
   const title = data?.results[0].title;
   const author = data?.results[0].source_id;
   const image = data?.results[0].image_url;
   const publishedDate = data?.results[0].pubDate;
   const content = data?.results[0]?.content.split(" ");
 
-  const description = content?.slice(1, 75).join(" ");
+  const description = content?.slice(1, 72).join(" ");
   const firstWord = content?.[0];
 
   const hoursDifference = moment().diff(moment(publishedDate), "hours");

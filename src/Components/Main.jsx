@@ -3,14 +3,11 @@ import useFetch from "../utils/useFetch";
 
 const Main = () => {
   const newsKey = import.meta.env.VITE_NEWS_KEY;
+  const newsKeyBackup = import.meta.env.VITE_NEWS_KEY_BACKUP;
 
   const { data, loading } = useFetch(
-    `https://newsdata.io/api/1/news?apikey=${newsKey}&image=1&language=en&full_content=1&size=9`
+    `https://newsdata.io/api/1/news?image=1&language=en&full_content=1&apikey=${newsKeyBackup}&size=9&domain=timeslive,independentuk,usatoday,tvtimes,euroweeklynews,`
   );
-
-  console.log(data);
-
-  // exclude stupid image provider
 
   return (
     <main className="px-[18px] mt-[46px] mb-[86px]">
@@ -20,11 +17,12 @@ const Main = () => {
       <div className="flex flex-wrap w-[100%] gap-[30px] ">
         {!loading &&
           data.results.slice(1).map((data) => {
-            console.log(data);
+            console.log(data?.title?.split(" ").slice(1, 5).join(" "));
             return (
               <NewsBox
                 key={Math.random()}
                 title={data?.title}
+                link={data?.link}
                 picture={data?.image_url}
                 author={data?.source_id}
                 time={data?.pubDate}
