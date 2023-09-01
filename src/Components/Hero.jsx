@@ -2,11 +2,7 @@ import useFetch from "../utils/useFetch";
 import moment from "moment/moment";
 
 const Hero = () => {
-  const newsKey = import.meta.env.VITE_NEWS_KEY;
-  const backupKey = import.meta.env.VITE_NEWS_KEY_BACKUP;
-  const { data } = useFetch(
-    `https://newsdata.io/api/1/news?apikey=${backupKey}&image=1&language=en&full_content=1&size=1&domain=timeslive,GOODTO,THEHILL,coincu`
-  );
+  const { data } = useFetch(1);
 
   const title = data?.results[0].title;
   const author = data?.results[0].source_id;
@@ -17,6 +13,12 @@ const Hero = () => {
   const description = content?.slice(1, 72).join(" ");
   const firstWord = content?.[0];
 
+  const link = data?.results[0].link;
+
+  const redirectHandller = () => {
+    window.location.href = link;
+  };
+
   const hoursDifference = moment().diff(moment(publishedDate), "hours");
   return (
     <section className="px-[18px]">
@@ -24,14 +26,19 @@ const Hero = () => {
         Hot Topics
       </h1>
       <div className="flex items-start gap-[30px]">
-        <div className="rounded-lg shrink-0 relative  bg-black/30 xl:w-[870px] xl:h-[400px] w-[100%] h-[400px]  ">
+        <div
+          onClick={redirectHandller}
+          className="rounded-lg shrink-0 relative  bg-black/30 xl:w-[870px] xl:h-[400px] w-[100%] h-[400px]  "
+        >
           <img
-            className="object-cover w-[100%] h-[100%]"
+            className="object-cover w-[100%] h-[100%] hover:cursor-pointer"
             alt="News Article Picture"
             src={image}
           />
           <div className="absolute bottom-[36px] left-[32px]">
-            <p className="text-[#F8F8F8] text-[32px] font-[700]">{title}</p>
+            <p className="text-[#F8F8F8] text-[32px] font-[700]  max-sm:text-[22px]">
+              {title}
+            </p>
             <div className="flex items-center gap-[27px]">
               <p className="hero-overlay-details">
                 {hoursDifference} Hours Ago

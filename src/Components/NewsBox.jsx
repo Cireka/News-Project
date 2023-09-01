@@ -1,7 +1,5 @@
 import moment from "moment/moment";
-import { useNavigate } from "react-router-dom";
 const NewsBox = ({ picture, title, author, time, link }) => {
-  const navigate = useNavigate();
   const hoursDifference = moment().diff(moment(time), "hours");
 
   const titleSize = title.split(" ").length;
@@ -21,10 +19,8 @@ const NewsBox = ({ picture, title, author, time, link }) => {
         />
       </div>
       <h2 className="leading-8 text-[24px] font-[400] hover:cursor-pointer break-words font-[roboto]">
-        {titleSize >= 10 ? `${cutTitle}` : title}{" "}
-        {titleSize >= 10 && (
-          <span className="font-[700] text-[18px]">Read more...</span>
-        )}
+        {titleSize >= 10 ? `${cutTitle}` : title}
+        {titleSize >= 10 && <span className="font-[700] text-[18px]">...</span>}
       </h2>
       <div className="mt-[8px] flex flex-col gap-[1]">
         <span>Publisher {author}</span>

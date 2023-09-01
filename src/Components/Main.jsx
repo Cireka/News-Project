@@ -1,14 +1,16 @@
 import NewsBox from "./NewsBox";
 import useFetch from "../utils/useFetch";
+import { useState } from "react";
 
 const Main = () => {
-  const newsKey = import.meta.env.VITE_NEWS_KEY;
-  const newsKeyBackup = import.meta.env.VITE_NEWS_KEY_BACKUP;
+  const [fetch, setFetch] = useState(false);
+  const { data, loading, articles } = useFetch(9, fetch);
 
-  const { data, loading } = useFetch(
-    `https://newsdata.io/api/1/news?image=1&language=en&full_content=1&apikey=${newsKeyBackup}&size=9&domain=timeslive,independentuk,usatoday,tvtimes,euroweeklynews,`
-  );
+  const moreNewsHandller = () => {
+    setFetch(!fetch);
+  };
 
+  console.log(articles);
   return (
     <main className="px-[18px] mt-[46px] mb-[86px]">
       <h2 className="mb-[24px] text-[36px] font-[roboto] font-[700] text-[#121221]">
@@ -16,8 +18,7 @@ const Main = () => {
       </h2>
       <div className="flex flex-wrap w-[100%] gap-[30px] ">
         {!loading &&
-          data.results.slice(1).map((data) => {
-            console.log(data?.title?.split(" ").slice(1, 5).join(" "));
+          articles.slice(1).map((data) => {
             return (
               <NewsBox
                 key={Math.random()}
@@ -29,6 +30,9 @@ const Main = () => {
               />
             );
           })}
+      </div>
+      <div className="flex justify-center mt-16">
+        <button onClick={moreNewsHandller}>See More</button>
       </div>
     </main>
   );
