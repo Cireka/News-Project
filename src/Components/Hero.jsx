@@ -35,8 +35,11 @@ const Hero = () => {
             alt="News Article Picture"
             src={image}
           />
-          <div className="absolute bottom-[36px] left-[32px]">
-            <p className="text-[#F8F8F8] text-[32px] font-[700]  max-sm:text-[22px]">
+          <div
+            onClick={redirectHandller}
+            className="absolute bottom-[36px] left-[32px]"
+          >
+            <p className="text-[#F8F8F8] text-[32px] font-[700]  max-sm:text-[22px] hover:cursor-pointer">
               {title}
             </p>
             <div className="flex items-center gap-[27px]">

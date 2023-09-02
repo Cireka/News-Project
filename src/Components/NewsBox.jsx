@@ -10,15 +10,16 @@ const NewsBox = ({ picture, title, author, time, link }) => {
   };
   return (
     <div className="flex-col gap-[16px] w-[270px] grow">
-      <div>
-        <img
-          className="w-[100%] h-[176px] object-cover rounded-lg hover:cursor-pointer"
-          alt="News Box Image"
-          src={picture}
-          onClick={RedirectHandller}
-        />
-      </div>
-      <h2 className="leading-8 text-[24px] font-[400] hover:cursor-pointer break-words font-[roboto]">
+      <img
+        className="w-[100%] h-[176px] object-cover rounded-lg hover:cursor-pointer"
+        alt="News Box Image"
+        src={picture}
+        onClick={RedirectHandller}
+      />
+      <h2
+        onClick={RedirectHandller}
+        className="leading-8 text-[24px] font-[400] hover:cursor-pointer break-words font-[roboto]"
+      >
         {titleSize >= 10 ? `${cutTitle}` : title}
         {titleSize >= 10 && <span className="font-[700] text-[18px]">...</span>}
       </h2>
