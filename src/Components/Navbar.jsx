@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { BsSearch } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const Navbar = () => {
   const [searchBarVisible, setSearchBarVisible] = useState(false);
+  const SearchRef = useRef();
 
   const toggleSearchBar = () => {
     setSearchBarVisible(!searchBarVisible);
@@ -34,6 +37,14 @@ const Navbar = () => {
       },
     },
   };
+  const navigate = useNavigate();
+  const sarchNewsHandller = (event) => {
+    const SearchWord = SearchRef.current.value;
+    if (SearchWord.length > 1) {
+      event.preventDefault();
+      navigate("/Search", { state: { SearchWord } });
+    }
+  };
 
   return (
     <nav className="px-[18px] mb-[64px] mt-[40px] flex items-center justify-between">
@@ -48,14 +59,18 @@ const Navbar = () => {
         animate={searchBarVisible ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="relative">
+        <form onSubmit={sarchNewsHandller} className="relative">
           <input
+            ref={SearchRef}
             className="rounded-md outline-none p-1 w-[100%] pl-[4pxs] "
             type="search"
             placeholder="Search"
           />
-          <BsSearch className="w-[24px] h-[32px] hover:cursor-pointer text-[#505050] absolute right-2 top-0" />
-        </div>
+          <BsSearch
+            onClick={sarchNewsHandller}
+            className="w-[24px] h-[32px] hover:cursor-pointer text-[#505050] absolute right-2 top-0"
+          />
+        </form>
       </motion.div>
       <div onClick={toggleSearchBar}>
         <motion.div
