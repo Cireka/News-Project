@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { appContext } from "../Context/NewsContext";
 
 const Navbar = () => {
+  const ctx = useContext(appContext);
   const navigate = useNavigate();
   const goToHomePageHandller = () => {
     navigate("/");
@@ -45,10 +47,10 @@ const Navbar = () => {
     setSearchingWord(event.target.value);
   };
   const sarchNewsHandller = (event) => {
-    if (searchingWord.length > 1) {
-      event.preventDefault();
-      navigate("/Search", { state: { searchingWord } });
-    }
+    event.preventDefault();
+    ctx.setSearchWord(searchingWord);
+    ctx.loadNew();
+    navigate("/Search");
   };
 
   return (

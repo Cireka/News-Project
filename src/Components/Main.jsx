@@ -8,7 +8,7 @@ const Main = () => {
 
   const moreNewsHandller = () => {
     ctx.loadMore();
-    ctx.fetch();
+    ctx.fetch()
     ctx.setContentSize(8);
   };
 

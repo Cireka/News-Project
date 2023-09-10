@@ -1,30 +1,22 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useContext } from "react";
 import Navbar from "../Components/Navbar";
 import { useLocation } from "react-router-dom";
 import useFetch from "../utils/useFetch";
 import NewsBox from "../Components/NewsBox";
 import { useState } from "react";
-
-const amountToFetch = 8;
+import { appContext } from "../Context/NewsContext";
 
 const SearchForNewsPage = () => {
-  const [data, seData] = useState(null);
-  const { state } = useLocation();
-  const { searchingWord } = state;
-  const [loadMethod, setLoadMethod] = useState(false);
-  const { loading, articles } = useFetch(
-    amountToFetch,
-    searchingWord,
-    loadMethod,
-    searchingWord
-  );
-
+  const ctx = useContext(appContext);
   useEffect(() => {
-    seData(articles);
-  }, [articles, searchingWord]);
+    ctx.setContentSize(8);
+    ctx.fetch();
+  }, [ctx.searchingWord]);
+  const { articles, loading } = ctx.data;
 
   const moreNewsHandller = () => {
-    setLoadMethod("Load More");
+    ctx.loadMore(true);
+    ctx.fetch();
   };
 
   return (
@@ -32,11 +24,11 @@ const SearchForNewsPage = () => {
       <Navbar />
       <main className="px-[18px] mt-[46px] mb-[86px]">
         <h2 className="mb-[24px] text-[36px] font-[roboto] font-[700] text-[#121221]">
-          Search Results For "{state.searchingWord}"
+          Search Results For "{ctx.searchingWord}"
         </h2>
         <div className="flex flex-wrap w-[100%] gap-[30px] ">
           {!loading &&
-            data.map((data) => {
+            articles.map((data) => {
               return (
                 <NewsBox
                   key={Math.random()}

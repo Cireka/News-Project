@@ -5,11 +5,12 @@ const newsKeyBackup = import.meta.env.VITE_NEWS_KEY_BACKUP;
 
 const starterValue = {
   data: {},
-  setSearchWord: (setSearchWord) => {},
+  setSearchWord: (Word) => {},
   setContentSize: (contentSize) => {},
-  loadMore: () => {},
+  loadMore: (status) => {},
   loadNew: () => {},
   fetch: () => {},
+  searchingWord: "",
 };
 const appContext = React.createContext(starterValue);
 
@@ -22,7 +23,7 @@ const NewsContext = (props) => {
     articles: [],
   });
   const [contentSize, setContentSize] = useState(9);
-  const [searchWord, setSearchWord] = useState(null);
+  const [searchWord, setSearchingWord] = useState("");
   const [loadMore, setLoadMore] = useState(false);
   const [fetchState, setFetchState] = useState(false);
 
@@ -59,7 +60,7 @@ const NewsContext = (props) => {
   }, [contentSize, fetchState]);
 
   const setSearchWordHandller = (Word) => {
-    setSearchWord(Word);
+    setSearchingWord(Word);
   };
   const setContentSizeHandller = (Size) => {
     setContentSize(Size);
@@ -72,6 +73,8 @@ const NewsContext = (props) => {
     setLoadMore(true);
   };
 
+  console.log("rendered");
+
   const fetchHandller = () => {
     setFetchState(!fetchState);
   };
@@ -82,6 +85,7 @@ const NewsContext = (props) => {
     loadMore: loadMoreHandller,
     loadNew: loadNewHandller,
     fetch: fetchHandller,
+    searchingWord: searchWord,
   };
 
   return (
