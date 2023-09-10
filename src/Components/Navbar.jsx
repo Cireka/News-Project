@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useRef } from "react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const goToHomePageHandller = () => {
+    navigate("/");
+  };
   const [searchBarVisible, setSearchBarVisible] = useState(false);
-  const SearchRef = useRef();
+  const [searchingWord, setSearchingWord] = useState("");
 
   const toggleSearchBar = () => {
     setSearchBarVisible(!searchBarVisible);
@@ -37,18 +40,20 @@ const Navbar = () => {
       },
     },
   };
-  const navigate = useNavigate();
+
+  const searchHandller = (event) => {
+    setSearchingWord(event.target.value);
+  };
   const sarchNewsHandller = (event) => {
-    const SearchWord = SearchRef.current.value;
-    if (SearchWord.length > 1) {
+    if (searchingWord.length > 1) {
       event.preventDefault();
-      navigate("/Search", { state: { SearchWord } });
+      navigate("/Search", { state: { searchingWord } });
     }
   };
 
   return (
     <nav className="px-[18px] mb-[64px] mt-[40px] flex items-center justify-between">
-      <div>
+      <div onClick={goToHomePageHandller} className="hover:cursor-pointer">
         <span className="text-[white]  items-center rounded text-[18px] font-[700] w-[56px] p-[8px] custom-shadow custom-bg">
           News
         </span>
@@ -61,7 +66,7 @@ const Navbar = () => {
       >
         <form onSubmit={sarchNewsHandller} className="relative">
           <input
-            ref={SearchRef}
+            onChange={searchHandller}
             className="rounded-md outline-none p-1 w-[100%] pl-[4pxs] "
             type="search"
             placeholder="Search"

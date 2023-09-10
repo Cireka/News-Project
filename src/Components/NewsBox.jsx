@@ -3,7 +3,7 @@ const NewsBox = ({ picture, title, author, time, link }) => {
   const hoursDifference = moment().diff(moment(time), "hours");
 
   const titleSize = title.split(" ").length;
-  const cutTitle = title?.split(" ").slice(1, 10).join(" ");
+  const cutTitle = title?.split(" ").slice(0, 10).join(" ");
 
   const RedirectHandller = () => {
     window.location.href = link;
@@ -24,7 +24,7 @@ const NewsBox = ({ picture, title, author, time, link }) => {
         {titleSize >= 10 && <span className="font-[700] text-[18px]">...</span>}
       </h2>
       <div className="mt-[8px] flex flex-col gap-[1]">
-        <span>Publisher {author}</span>
+        <span className="uppercase font-[500]">Publisher {author}</span>
         <p className=" flex font-[roboto] text-[#949494] text-[12px] font-[600]">
           {hoursDifference} Hours ago
         </p>

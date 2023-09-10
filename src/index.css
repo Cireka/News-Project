@@ -28,4 +28,6 @@ html {
 }
 body {
   background-color: #e9eaea;
+  max-width: 1300px;
+  margin: 0 auto;
 }

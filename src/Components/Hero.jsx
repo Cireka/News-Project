@@ -1,8 +1,11 @@
-import useFetch from "../utils/useFetch";
+
 import moment from "moment/moment";
+import { useContext } from "react";
+import { appContext } from "../Context/NewsContext";
 
 const Hero = () => {
-  const { data } = useFetch(1);
+  const ctx = useContext(appContext);
+  const { data } = ctx.data;
 
   const title = data?.results[0].title;
   const author = data?.results[0].source_id;

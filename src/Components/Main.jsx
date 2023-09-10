@@ -1,15 +1,15 @@
 import NewsBox from "./NewsBox";
-import useFetch from "../utils/useFetch";
-import { useState } from "react";
+import { useContext } from "react";
+import { appContext } from "../Context/NewsContext";
 
 const Main = () => {
-  const [fetch, setFetch] = useState(false);
-  const [amountToFetch, setAmountToFetch] = useState(9);
-  const { loading, articles } = useFetch(amountToFetch, fetch);
+  const ctx = useContext(appContext);
+  const { data, loading } = ctx;
 
   const moreNewsHandller = () => {
-    setAmountToFetch(8);
-    setFetch(!fetch);
+    ctx.loadMore();
+    ctx.fetch();
+    ctx.setContentSize(8);
   };
 
   return (
@@ -19,7 +19,7 @@ const Main = () => {
       </h2>
       <div className="flex flex-wrap w-[100%] gap-[30px] ">
         {!loading &&
-          articles.slice(1).map((data) => {
+          data.articles.slice(1).map((data) => {
             return (
               <NewsBox
                 key={Math.random()}
