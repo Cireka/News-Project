@@ -11,13 +11,13 @@ const starterValue = {
   loadNew: () => {},
   fetch: () => {},
   searchingWord: "",
+  loading: false,
 };
 const appContext = React.createContext(starterValue);
 
 const NewsContext = (props) => {
   const [data, setData] = useState({
     data: null,
-    loading: true,
     error: null,
     nextPage: null,
     articles: [],
@@ -26,10 +26,15 @@ const NewsContext = (props) => {
   const [searchWord, setSearchingWord] = useState("");
   const [loadMore, setLoadMore] = useState(false);
   const [fetchState, setFetchState] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // &domain=timeslive,independentuk,usatoday,tvtimes,euroweeklynews,
   useEffect(() => {
+    if (!loadMore) {
+      setLoading(true);
+    }
     fetch(
-      `https://newsdata.io/api/1/news?image=1&language=en&full_content=1&apikey=${newsKeyBackup}&size=${contentSize}&domain=timeslive,independentuk,usatoday,tvtimes,euroweeklynews,${
+      `https://newsdata.io/api/1/news?image=1&language=en&full_content=1&apikey=${newsKeyBackup}&size=${contentSize}${
         data.nextPage ? `&page=${data.nextPage}` : ""
       }${searchWord ? `&q=${searchWord}` : ""} `
     )
@@ -40,21 +45,22 @@ const NewsContext = (props) => {
         if (!loadMore) {
           setData((prevData) => ({
             ...prevData,
-            loading: false,
             error: null,
             data,
             nextPage: data.nextPage,
             articles: [...data.results],
           }));
+          setLoading(false);
         } else if (loadMore) {
+          console.log("should have added");
           setData((prevData) => ({
             ...prevData,
-            loading: false,
             error: null,
             data,
             nextPage: data.nextPage,
             articles: [...prevData.articles, ...data.results],
           }));
+          setLoading(false);
         }
       });
   }, [contentSize, fetchState]);
@@ -73,8 +79,6 @@ const NewsContext = (props) => {
     setLoadMore(true);
   };
 
-  console.log("rendered");
-
   const fetchHandller = () => {
     setFetchState(!fetchState);
   };
@@ -86,6 +90,7 @@ const NewsContext = (props) => {
     loadNew: loadNewHandller,
     fetch: fetchHandller,
     searchingWord: searchWord,
+    loading: loading,
   };
 
   return (

@@ -4,11 +4,12 @@ import { appContext } from "../Context/NewsContext";
 
 const Main = () => {
   const ctx = useContext(appContext);
-  const { data, loading } = ctx;
+  const { data } = ctx;
+  const loading = ctx.loading;
 
   const moreNewsHandller = () => {
     ctx.loadMore();
-    ctx.fetch()
+    ctx.fetch();
     ctx.setContentSize(8);
   };
 

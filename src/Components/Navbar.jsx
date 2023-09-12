@@ -7,9 +7,7 @@ import { appContext } from "../Context/NewsContext";
 const Navbar = () => {
   const ctx = useContext(appContext);
   const navigate = useNavigate();
-  const goToHomePageHandller = () => {
-    navigate("/");
-  };
+
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [searchingWord, setSearchingWord] = useState("");
 
@@ -55,12 +53,12 @@ const Navbar = () => {
 
   return (
     <nav className="px-[18px] mb-[64px] mt-[40px] flex items-center justify-between">
-      <div onClick={goToHomePageHandller} className="hover:cursor-pointer">
+      <a href="/" className="hover:cursor-pointer">
         <span className="text-[white]  items-center rounded text-[18px] font-[700] w-[56px] p-[8px] custom-shadow custom-bg">
           News
         </span>
         <span className="pl-[6px] text-[18px] font-[700]">Portal</span>
-      </div>
+      </a>
       <motion.div
         initial="hidden"
         animate={searchBarVisible ? "visible" : "hidden"}

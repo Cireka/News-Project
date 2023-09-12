@@ -1,22 +1,17 @@
-
 import moment from "moment/moment";
 import { useContext } from "react";
 import { appContext } from "../Context/NewsContext";
 
 const Hero = () => {
   const ctx = useContext(appContext);
-  const { data } = ctx.data;
-
-  const title = data?.results[0].title;
-  const author = data?.results[0].source_id;
-  const image = data?.results[0].image_url;
-  const publishedDate = data?.results[0].pubDate;
-  const content = data?.results[0]?.content.split(" ");
-
+  const title = ctx.data?.articles[0]?.title;
+  const author = ctx.data?.articles?.[0]?.source_id;
+  const image = ctx.data?.articles?.[0]?.image_url;
+  const publishedDate = ctx.data?.articles?.[0]?.pubDate;
+  const content = ctx.data?.articles?.[0]?.content.split(" ");
   const description = content?.slice(1, 72).join(" ");
   const firstWord = content?.[0];
-
-  const link = data?.results[0].link;
+  const link = ctx.data?.articles?.[0]?.link;
 
   const redirectHandller = () => {
     window.location.href = link;
