@@ -34,7 +34,7 @@ const NewsContext = (props) => {
       setLoading(true);
     }
     fetch(
-      `https://newsdata.io/api/1/news?image=1&language=en&full_content=1&apikey=${newsKeyBackup}&size=${contentSize}${
+      `https://newsdata.io/api/1/news?image=1&language=en&excludedomain=openpr.com,times-series.co.uk,torontosun.com,liverpoolecho.co.uk,thehill.com,&full_content=1&apikey=${newsKey}&size=${contentSize}${
         data.nextPage ? `&page=${data.nextPage}` : ""
       }${searchWord ? `&q=${searchWord}` : ""} `
     )
@@ -62,6 +62,9 @@ const NewsContext = (props) => {
           }));
           setLoading(false);
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [contentSize, fetchState]);
 
